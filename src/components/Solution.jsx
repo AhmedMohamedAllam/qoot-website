@@ -130,7 +130,7 @@ export default function Solution() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative flex items-start gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}
+              className={`relative flex items-start gap-6 ${isRTL ? 'flex-row-reverse text-right' : 'text-left'}`}
             >
               {/* Timeline Line */}
               {index < steps.length - 1 && (
@@ -140,13 +140,13 @@ export default function Solution() {
               {/* Icon Circle */}
               <div className="relative flex-shrink-0 w-20 h-20 rounded-full bg-white border-4 border-[#2ecc71] shadow-lg shadow-[#2ecc71]/20 flex items-center justify-center">
                 <step.icon className="w-8 h-8 text-[#2ecc71]" />
-                <div className={`absolute -top-2 ${isRTL ? '-left-2' : '-right-2'} w-7 h-7 rounded-full bg-[#2c3e50] text-white text-xs font-bold flex items-center justify-center`}>
+                <div className={`absolute -top-2 ${isRTL ? '-right-2' : '-left-2'} w-7 h-7 rounded-full bg-[#2c3e50] text-white text-xs font-bold flex items-center justify-center`}>
                   {step.number}
                 </div>
               </div>
 
               {/* Content */}
-              <div className={`pt-2 ${isRTL ? 'text-right' : ''}`}>
+              <div className="pt-2 flex-1">
                 <h3 className="text-xl font-bold text-[#2c3e50] mb-2">
                   {step.title}
                 </h3>
