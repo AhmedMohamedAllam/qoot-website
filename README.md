@@ -57,6 +57,8 @@ SCAN → ORDER → ENJOY → PAY → ANALYZE
 - **Animations**: Framer Motion
 - **Icons**: React Icons
 - **Backend**: Firebase Firestore
+- **Email Notifications**: EmailJS
+- **Internationalization**: Arabic/English with RTL support
 - **Deployment**: GitHub Pages
 
 ---
@@ -95,6 +97,11 @@ SCAN → ORDER → ENJOY → PAY → ANALYZE
    VITE_FIREBASE_STORAGE_BUCKET="your-project.appspot.com"
    VITE_FIREBASE_MESSAGING_SENDER_ID="your-sender-id"
    VITE_FIREBASE_APP_ID="your-app-id"
+   
+   # Optional: EmailJS for email notifications
+   VITE_EMAILJS_SERVICE_ID="your-service-id"
+   VITE_EMAILJS_TEMPLATE_ID="your-template-id"
+   VITE_EMAILJS_PUBLIC_KEY="your-public-key"
    ```
 
 4. **Start development server**
@@ -220,6 +227,63 @@ service cloud.firestore {
   }
 }
 ```
+
+---
+
+## 📧 EmailJS Setup (Optional)
+
+To receive email notifications when users submit the contact form:
+
+1. **Create an EmailJS account** at [emailjs.com](https://www.emailjs.com/)
+
+2. **Add an Email Service**
+   - Go to Email Services → Add New Service
+   - Connect your Gmail or other email provider
+
+3. **Create an Email Template**
+   - Go to Email Templates → Create New Template
+   - Use these template variables:
+   ```
+   Subject: New Demo Request from {{restaurant_name}}
+   
+   Body:
+   Restaurant: {{restaurant_name}}
+   Owner: {{owner_name}}
+   Email: {{email}}
+   Phone: {{phone}}
+   Location: {{location}}
+   Message: {{message}}
+   ```
+
+4. **Get your credentials**
+   - Service ID: Email Services → Your Service → Service ID
+   - Template ID: Email Templates → Your Template → Template ID
+   - Public Key: Account → General → Public Key
+
+5. **Add to `.env`**
+   ```env
+   VITE_EMAILJS_SERVICE_ID="service_xxxxx"
+   VITE_EMAILJS_TEMPLATE_ID="template_xxxxx"
+   VITE_EMAILJS_PUBLIC_KEY="xxxxxxxxxxxxx"
+   ```
+
+6. **Add GitHub Secrets** (for production)
+   ```bash
+   gh secret set VITE_EMAILJS_SERVICE_ID --body "service_xxxxx"
+   gh secret set VITE_EMAILJS_TEMPLATE_ID --body "template_xxxxx"
+   gh secret set VITE_EMAILJS_PUBLIC_KEY --body "xxxxxxxxxxxxx"
+   ```
+
+---
+
+## 🌐 Internationalization
+
+The website supports both **English** and **Arabic** with full RTL (Right-to-Left) support.
+
+- Language toggle in the navbar
+- All text content is translated
+- Layout automatically adjusts for RTL
+- Language preference saved to localStorage
 
 ---
 

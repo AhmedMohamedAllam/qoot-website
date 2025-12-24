@@ -1,65 +1,67 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiCheck, FiZap } from 'react-icons/fi';
-
-const pricingPlans = [
-  {
-    name: 'STARTER',
-    subtitle: 'Menu Only',
-    description: 'Perfect for cafes needing quick digital menus.',
-    price: 'Contact Us',
-    period: '',
-    features: [
-      'QR Code generation',
-      'Digital Menu Management',
-      'Basic customization',
-      'Up to 50 menu items',
-      'Email support',
-    ],
-    cta: 'Get Started',
-    popular: false,
-  },
-  {
-    name: 'PRO',
-    subtitle: 'Full Suite',
-    description: 'Best for busy restaurants with high volume.',
-    price: 'Contact Us',
-    period: '',
-    features: [
-      'Everything in Starter',
-      'Smart Ordering System',
-      'Table-Side Payments',
-      'Basic Analytics Dashboard',
-      'Unlimited menu items',
-      'Priority support',
-      'Staff training included',
-    ],
-    cta: 'Get Started',
-    popular: true,
-  },
-  {
-    name: 'ENTERPRISE',
-    subtitle: 'Premium Experience',
-    description: 'For chains and luxury dining establishments.',
-    price: 'Custom',
-    period: '',
-    features: [
-      'Everything in Pro',
-      'AR Menu Visualization',
-      'AI Recommendations',
-      'API Access',
-      'Advanced Analytics',
-      'Multi-location support',
-      'Dedicated account manager',
-      'Custom integrations',
-    ],
-    cta: 'Contact Sales',
-    popular: false,
-  },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Pricing() {
   const [isYearly] = useState(false);
+  const { t, isRTL } = useLanguage();
+
+  const pricingPlans = [
+    {
+      name: t('pricing.starter'),
+      subtitle: t('pricing.starterTag'),
+      description: t('pricing.starterDesc'),
+      price: t('pricing.contactUs'),
+      period: '',
+      features: [
+        t('pricing.features.qrCode'),
+        t('pricing.features.menuManagement'),
+        t('pricing.features.basicCustomization'),
+        t('pricing.features.upTo50Items'),
+        t('pricing.features.emailSupport'),
+      ],
+      cta: t('pricing.getStarted'),
+      popular: false,
+    },
+    {
+      name: t('pricing.pro'),
+      subtitle: t('pricing.proTag'),
+      description: t('pricing.proDesc'),
+      price: t('pricing.contactUs'),
+      period: '',
+      features: [
+        t('pricing.features.everythingStarter'),
+        t('pricing.features.smartOrdering'),
+        t('pricing.features.tableSidePayments'),
+        t('pricing.features.basicAnalytics'),
+        t('pricing.features.unlimitedItems'),
+        t('pricing.features.prioritySupport'),
+        t('pricing.features.staffTraining'),
+      ],
+      cta: t('pricing.getStarted'),
+      popular: true,
+    },
+    {
+      name: t('pricing.enterprise'),
+      subtitle: t('pricing.enterpriseTag'),
+      description: t('pricing.enterpriseDesc'),
+      price: t('pricing.custom'),
+      period: '',
+      features: [
+        t('pricing.features.everythingPro'),
+        t('pricing.features.arMenu'),
+        t('pricing.features.aiRecommendations'),
+        t('pricing.features.apiAccess'),
+        t('pricing.features.advancedAnalytics'),
+        t('pricing.features.multiLocation'),
+        t('pricing.features.dedicatedManager'),
+        t('pricing.features.customIntegrations'),
+      ],
+      cta: t('pricing.contactSales'),
+      popular: false,
+    },
+  ];
 
   const scrollToContact = () => {
     const element = document.querySelector('#contact');
@@ -84,14 +86,17 @@ export default function Pricing() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1 rounded-full bg-[#2ecc71]/10 text-[#2ecc71] text-sm font-medium mb-4">
-            Pricing
+            {t('pricing.badge')}
           </span>
           <h2 className="text-4xl sm:text-5xl font-bold text-[#2c3e50] mb-6">
-            Flexible SaaS for <span className="text-[#2ecc71]">Every Stage</span>
+            {isRTL ? (
+              <>اشتراك مرن <span className="text-[#2ecc71]">لكل مرحلة</span></>
+            ) : (
+              <>Flexible SaaS for <span className="text-[#2ecc71]">Every Stage</span></>
+            )}
           </h2>
           <p className="text-lg text-[#646464] max-w-3xl mx-auto">
-            Choose the plan that fits your restaurant's needs. 
-            All plans include our core digital dining technology.
+            {t('pricing.description')}
           </p>
         </motion.div>
 
@@ -108,15 +113,15 @@ export default function Pricing() {
                 plan.popular 
                   ? 'bg-[#2c3e50] text-white' 
                   : 'bg-white border border-gray-100'
-              } p-8 shadow-lg`}
+              } p-8 shadow-lg ${isRTL ? 'text-right' : ''}`}
               whileHover={{ y: -10, boxShadow: '0 25px 50px rgba(0,0,0,0.15)' }}
             >
               {/* Popular Badge */}
               {plan.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <div className="px-4 py-1 bg-[#2ecc71] rounded-full text-white text-sm font-bold flex items-center gap-2">
+                  <div className={`px-4 py-1 bg-[#2ecc71] rounded-full text-white text-sm font-bold flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <FiZap className="w-4 h-4" />
-                    Most Popular
+                    {t('pricing.mostPopular')}
                   </div>
                 </div>
               )}
@@ -161,7 +166,7 @@ export default function Pricing() {
               {/* Features */}
               <ul className="space-y-4 mb-8">
                 {plan.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-start gap-3">
+                  <li key={featureIndex} className={`flex items-start gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
                     <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
                       plan.popular ? 'bg-[#2ecc71]/20' : 'bg-[#2ecc71]/10'
                     }`}>
@@ -202,12 +207,12 @@ export default function Pricing() {
           className="mt-16 text-center"
         >
           <p className="text-[#646464]">
-            Need a custom solution?{' '}
+            {t('pricing.needCustom')}{' '}
             <button 
               onClick={scrollToContact}
               className="text-[#2ecc71] font-semibold hover:underline"
             >
-              Contact us for enterprise pricing
+              {t('pricing.contactForPricing')}
             </button>
           </p>
         </motion.div>
@@ -215,4 +220,3 @@ export default function Pricing() {
     </section>
   );
 }
-

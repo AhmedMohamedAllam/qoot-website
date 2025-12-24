@@ -1,42 +1,45 @@
 import { motion } from 'framer-motion';
 import { FiMapPin, FiPackage, FiCpu, FiSun } from 'react-icons/fi';
-
-const milestones = [
-  {
-    quarter: 'Q1',
-    icon: FiMapPin,
-    title: 'MVP Launch',
-    description: 'Launch in New Cairo & Madinaty with core features',
-    status: 'current',
-    locations: ['New Cairo', 'Madinaty'],
-  },
-  {
-    quarter: 'Q2',
-    icon: FiPackage,
-    title: 'Inventory Integration',
-    description: 'Advanced inventory management and supplier connections',
-    status: 'upcoming',
-    locations: [],
-  },
-  {
-    quarter: 'Q3',
-    icon: FiCpu,
-    title: 'AI Personalization',
-    description: 'AI-driven customer personalization and recommendations',
-    status: 'upcoming',
-    locations: [],
-  },
-  {
-    quarter: 'Q4',
-    icon: FiSun,
-    title: 'Coastal Expansion',
-    description: 'Expansion to premium vacation destinations',
-    status: 'upcoming',
-    locations: ['Sahel', 'Gouna'],
-  },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Roadmap() {
+  const { t, isRTL } = useLanguage();
+
+  const milestones = [
+    {
+      quarter: t('roadmap.q1'),
+      icon: FiMapPin,
+      title: t('roadmap.q1Title'),
+      description: t('roadmap.q1Desc'),
+      status: 'current',
+      locations: [t('roadmap.newCairo'), t('roadmap.madinaty')],
+    },
+    {
+      quarter: t('roadmap.q2'),
+      icon: FiPackage,
+      title: t('roadmap.q2Title'),
+      description: t('roadmap.q2Desc'),
+      status: 'upcoming',
+      locations: [],
+    },
+    {
+      quarter: t('roadmap.q3'),
+      icon: FiCpu,
+      title: t('roadmap.q3Title'),
+      description: t('roadmap.q3Desc'),
+      status: 'upcoming',
+      locations: [],
+    },
+    {
+      quarter: t('roadmap.q4'),
+      icon: FiSun,
+      title: t('roadmap.q4Title'),
+      description: t('roadmap.q4Desc'),
+      status: 'upcoming',
+      locations: [t('roadmap.sahel'), t('roadmap.gouna')],
+    },
+  ];
+
   return (
     <section id="roadmap" className="py-24 bg-white relative overflow-hidden">
       {/* Background Decoration */}
@@ -55,14 +58,17 @@ export default function Roadmap() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1 rounded-full bg-[#2ecc71]/10 text-[#2ecc71] text-sm font-medium mb-4">
-            Roadmap
+            {t('roadmap.badge')}
           </span>
           <h2 className="text-4xl sm:text-5xl font-bold text-[#2c3e50] mb-6">
-            Building for the <span className="text-[#2ecc71]">Future</span>
+            {isRTL ? (
+              <>نبني <span className="text-[#2ecc71]">للمستقبل</span></>
+            ) : (
+              <>Building for the <span className="text-[#2ecc71]">Future</span></>
+            )}
           </h2>
           <p className="text-lg text-[#646464] max-w-3xl mx-auto">
-            Our vision extends beyond New Cairo. Here's how we're planning to 
-            revolutionize dining across Egypt.
+            {t('roadmap.description')}
           </p>
         </motion.div>
 
@@ -70,22 +76,24 @@ export default function Roadmap() {
         <div className="max-w-4xl mx-auto">
           <div className="relative">
             {/* Vertical Line */}
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#2ecc71] via-[#3498db] to-[#9b59b6]" />
+            <div className={`absolute ${isRTL ? 'right-8 md:right-1/2' : 'left-8 md:left-1/2'} top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#2ecc71] via-[#3498db] to-[#9b59b6]`} />
 
             {/* Milestones */}
             {milestones.map((milestone, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                initial={{ opacity: 0, x: isRTL ? (index % 2 === 0 ? 50 : -50) : (index % 2 === 0 ? -50 : 50) }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 className={`relative flex items-center mb-12 ${
-                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                  isRTL 
+                    ? (index % 2 === 0 ? 'md:flex-row-reverse' : 'md:flex-row')
+                    : (index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse')
                 }`}
               >
                 {/* Timeline Node */}
-                <div className="absolute left-8 md:left-1/2 -translate-x-1/2 z-10">
+                <div className={`absolute ${isRTL ? 'right-8 md:right-1/2' : 'left-8 md:left-1/2'} ${isRTL ? 'translate-x-1/2' : '-translate-x-1/2'} z-10`}>
                   <motion.div
                     className={`w-16 h-16 rounded-full flex items-center justify-center ${
                       milestone.status === 'current'
@@ -104,8 +112,10 @@ export default function Roadmap() {
 
                 {/* Content Card */}
                 <div 
-                  className={`w-full md:w-5/12 ml-24 md:ml-0 ${
-                    index % 2 === 0 ? 'md:pr-20' : 'md:pl-20'
+                  className={`w-full md:w-5/12 ${isRTL ? 'mr-24 md:mr-0' : 'ml-24 md:ml-0'} ${
+                    isRTL 
+                      ? (index % 2 === 0 ? 'md:pl-20' : 'md:pr-20')
+                      : (index % 2 === 0 ? 'md:pr-20' : 'md:pl-20')
                   }`}
                 >
                   <motion.div
@@ -113,7 +123,7 @@ export default function Roadmap() {
                       milestone.status === 'current'
                         ? 'bg-[#2ecc71] text-white'
                         : 'bg-gray-50 border border-gray-100'
-                    }`}
+                    } ${isRTL ? 'text-right' : ''}`}
                     whileHover={{ y: -5, boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
                   >
                     {/* Quarter Badge */}
@@ -122,7 +132,7 @@ export default function Roadmap() {
                         ? 'bg-white/20 text-white'
                         : 'bg-[#2ecc71]/10 text-[#2ecc71]'
                     }`}>
-                      {milestone.quarter} 2025
+                      {milestone.quarter}
                     </div>
 
                     {/* Title */}
@@ -141,17 +151,17 @@ export default function Roadmap() {
 
                     {/* Locations */}
                     {milestone.locations.length > 0 && (
-                      <div className="flex flex-wrap gap-2">
+                      <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
                         {milestone.locations.map((location, locIndex) => (
                           <span
                             key={locIndex}
-                            className={`px-3 py-1 rounded-full text-xs font-medium ${
+                            className={`px-3 py-1 rounded-full text-xs font-medium flex items-center ${isRTL ? 'flex-row-reverse' : ''} ${
                               milestone.status === 'current'
                                 ? 'bg-white/20 text-white'
                                 : 'bg-[#2c3e50]/10 text-[#2c3e50]'
                             }`}
                           >
-                            <FiMapPin className="inline w-3 h-3 mr-1" />
+                            <FiMapPin className={`inline w-3 h-3 ${isRTL ? 'ml-1' : 'mr-1'}`} />
                             {location}
                           </span>
                         ))}
@@ -160,9 +170,9 @@ export default function Roadmap() {
 
                     {/* Current Status Indicator */}
                     {milestone.status === 'current' && (
-                      <div className="mt-4 flex items-center gap-2">
+                      <div className={`mt-4 flex items-center gap-2 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
                         <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                        <span className="text-xs text-white/80">Currently Active</span>
+                        <span className="text-xs text-white/80">{t('roadmap.currentlyActive')}</span>
                       </div>
                     )}
                   </motion.div>
@@ -181,7 +191,7 @@ export default function Roadmap() {
           className="mt-16 text-center"
         >
           <p className="text-[#646464] text-lg mb-6">
-            Be part of the dining revolution from day one.
+            {t('roadmap.bePartOf')}
           </p>
           <motion.button
             onClick={() => {
@@ -192,11 +202,10 @@ export default function Roadmap() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Join Our Early Adopter Program
+            {t('roadmap.joinEarly')}
           </motion.button>
         </motion.div>
       </div>
     </section>
   );
 }
-

@@ -1,28 +1,6 @@
 import { motion } from 'framer-motion';
 import { FiUsers, FiClock, FiFileText, FiBarChart2 } from 'react-icons/fi';
-
-const painPoints = [
-  {
-    icon: FiUsers,
-    title: 'Overwhelmed Staff',
-    description: 'Staff are overwhelmed during peak hours, leading to service errors and unhappy customers.',
-  },
-  {
-    icon: FiClock,
-    title: 'Slow Table Turnover',
-    description: 'Guests wait too long for the bill, reducing your daily covers and revenue potential.',
-  },
-  {
-    icon: FiFileText,
-    title: 'Expensive Menu Updates',
-    description: 'Reprinting paper menus every time prices change drains your budget unnecessarily.',
-  },
-  {
-    icon: FiBarChart2,
-    title: 'No Real Data',
-    description: 'You lack real data on what is actually selling, making decisions based on guesswork.',
-  },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -46,6 +24,31 @@ const itemVariants = {
 };
 
 export default function Problem() {
+  const { t, isRTL } = useLanguage();
+
+  const painPoints = [
+    {
+      icon: FiUsers,
+      title: t('problem.overwhelmedStaff'),
+      description: t('problem.overwhelmedStaffDesc'),
+    },
+    {
+      icon: FiClock,
+      title: t('problem.slowTurnover'),
+      description: t('problem.slowTurnoverDesc'),
+    },
+    {
+      icon: FiFileText,
+      title: t('problem.expensiveMenus'),
+      description: t('problem.expensiveMenusDesc'),
+    },
+    {
+      icon: FiBarChart2,
+      title: t('problem.noData'),
+      description: t('problem.noDataDesc'),
+    },
+  ];
+
   return (
     <section id="problem" className="py-24 bg-[#1a252f] relative overflow-hidden">
       {/* Background Pattern */}
@@ -63,15 +66,17 @@ export default function Problem() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1 rounded-full bg-red-500/10 text-red-400 text-sm font-medium mb-4">
-            The Challenge
+            {t('problem.badge')}
           </span>
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
-            The Chaos of <span className="text-red-400">Traditional Dining</span>
+            {isRTL ? (
+              <>فوضى <span className="text-red-400">المطاعم التقليدية</span></>
+            ) : (
+              <>The Chaos of <span className="text-red-400">Traditional Dining</span></>
+            )}
           </h2>
           <p className="text-lg text-white/60 max-w-3xl mx-auto">
-            Running a restaurant in Egypt today involves juggling overwhelmed staff, 
-            outdated paper menus, and payment bottlenecks. These friction points 
-            don't just annoy customers—they cost you money.
+            {t('problem.description')}
           </p>
         </motion.div>
 
@@ -87,10 +92,10 @@ export default function Problem() {
             <motion.div
               key={index}
               variants={itemVariants}
-              className="group relative p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-red-500/30 transition-all duration-300"
+              className={`group relative p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-red-500/30 transition-all duration-300 ${isRTL ? 'text-right' : ''}`}
             >
               {/* Icon */}
-              <div className="w-14 h-14 rounded-xl bg-red-500/10 flex items-center justify-center mb-6 group-hover:bg-red-500/20 transition-colors">
+              <div className={`w-14 h-14 rounded-xl bg-red-500/10 flex items-center justify-center mb-6 group-hover:bg-red-500/20 transition-colors ${isRTL ? 'mr-0 ml-auto' : ''}`}>
                 <point.icon className="w-7 h-7 text-red-400" />
               </div>
 
@@ -103,8 +108,8 @@ export default function Problem() {
               </p>
 
               {/* Decorative Corner */}
-              <div className="absolute top-0 right-0 w-24 h-24 opacity-0 group-hover:opacity-100 transition-opacity">
-                <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-red-500/50" />
+              <div className={`absolute top-0 ${isRTL ? 'left-0' : 'right-0'} w-24 h-24 opacity-0 group-hover:opacity-100 transition-opacity`}>
+                <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} w-2 h-2 rounded-full bg-red-500/50`} />
               </div>
             </motion.div>
           ))}
@@ -119,23 +124,22 @@ export default function Problem() {
           className="mt-16 text-center"
         >
           <p className="text-white/40 text-lg mb-6">
-            Sound familiar? There's a better way.
+            {t('problem.soundFamiliar')}
           </p>
           <motion.button
             onClick={() => {
               const element = document.querySelector('#solution');
               if (element) element.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="inline-flex items-center px-6 py-3 rounded-lg bg-[#2ecc71]/10 text-[#2ecc71] font-medium hover:bg-[#2ecc71]/20 transition-colors"
+            className={`inline-flex items-center px-6 py-3 rounded-lg bg-[#2ecc71]/10 text-[#2ecc71] font-medium hover:bg-[#2ecc71]/20 transition-colors ${isRTL ? 'flex-row-reverse' : ''}`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            See the Solution
-            <span className="ml-2">↓</span>
+            {t('problem.seeSolution')}
+            <span className={`${isRTL ? 'mr-2' : 'ml-2'}`}>↓</span>
           </motion.button>
         </motion.div>
       </div>
     </section>
   );
 }
-

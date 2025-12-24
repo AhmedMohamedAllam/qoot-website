@@ -1,14 +1,6 @@
 import { motion } from 'framer-motion';
 import { FiMail, FiMapPin, FiPhone, FiInstagram, FiLinkedin, FiFacebook } from 'react-icons/fi';
-
-const footerLinks = [
-  { name: 'Problem', href: '#problem' },
-  { name: 'Solution', href: '#solution' },
-  { name: 'Features', href: '#features' },
-  { name: 'Pricing', href: '#pricing' },
-  { name: 'Roadmap', href: '#roadmap' },
-  { name: 'Contact', href: '#contact' },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 const socialLinks = [
   { name: 'Instagram', icon: FiInstagram, href: '#' },
@@ -17,6 +9,17 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const { t, isRTL } = useLanguage();
+
+  const footerLinks = [
+    { name: t('nav.problem'), href: '#problem' },
+    { name: t('nav.solution'), href: '#solution' },
+    { name: t('nav.features'), href: '#features' },
+    { name: t('nav.pricing'), href: '#pricing' },
+    { name: t('nav.roadmap'), href: '#roadmap' },
+    { name: t('nav.contact'), href: '#contact' },
+  ];
+
   const scrollToSection = (href) => {
     const element = document.querySelector(href);
     if (element) {
@@ -25,7 +28,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#2c3e50] text-white">
+    <footer className="bg-[#2c3e50] text-white" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -36,14 +39,15 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-3xl font-black tracking-tight mb-4">QOOT</h3>
+              <h3 className="text-3xl font-black tracking-tight mb-4">
+                {isRTL ? 'قوت' : 'QOOT'}
+              </h3>
               <p className="text-white/70 text-lg mb-6 max-w-md">
-                Transforming hospitality in Egypt with smart digital dining solutions. 
-                Smart Menus. Smart Payments. Smarter Dining.
+                {t('footer.tagline')}
               </p>
               
               {/* Social Links */}
-              <div className="flex space-x-4">
+              <div className={`flex ${isRTL ? 'space-x-reverse space-x-4' : 'space-x-4'}`}>
                 {socialLinks.map((social) => (
                   <motion.a
                     key={social.name}
@@ -67,10 +71,10 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
             >
-              <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
+              <h4 className="text-lg font-semibold mb-6">{t('footer.quickLinks')}</h4>
               <ul className="space-y-3">
                 {footerLinks.map((link) => (
-                  <li key={link.name}>
+                  <li key={link.href}>
                     <button
                       onClick={() => scrollToSection(link.href)}
                       className="text-white/70 hover:text-[#2ecc71] transition-colors"
@@ -91,31 +95,31 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              <h4 className="text-lg font-semibold mb-6">Contact Us</h4>
-              <p className="text-white/50 text-sm mb-4">Ahmed Allam, CEO</p>
+              <h4 className="text-lg font-semibold mb-6">{t('footer.contactUs')}</h4>
+              <p className="text-white/50 text-sm mb-4">{t('footer.ceo')}</p>
               <ul className="space-y-4">
                 <li>
                   <a
                     href="mailto:ahmedallam344@gmail.com"
-                    className="flex items-center space-x-3 text-white/70 hover:text-[#2ecc71] transition-colors"
+                    className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} text-white/70 hover:text-[#2ecc71] transition-colors`}
                   >
                     <FiMail className="w-5 h-5" />
-                    <span>ahmedallam344@gmail.com</span>
+                    <span dir="ltr">ahmedallam344@gmail.com</span>
                   </a>
                 </li>
                 <li>
                   <a
                     href="tel:+201099441915"
-                    className="flex items-center space-x-3 text-white/70 hover:text-[#2ecc71] transition-colors"
+                    className={`flex items-center ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} text-white/70 hover:text-[#2ecc71] transition-colors`}
                   >
                     <FiPhone className="w-5 h-5" />
-                    <span>+20 109 944 1915</span>
+                    <span dir="ltr">+20 109 944 1915</span>
                   </a>
                 </li>
                 <li>
-                  <div className="flex items-start space-x-3 text-white/70">
+                  <div className={`flex items-start ${isRTL ? 'space-x-reverse space-x-3' : 'space-x-3'} text-white/70`}>
                     <FiMapPin className="w-5 h-5 mt-0.5" />
-                    <span>New Cairo, Egypt</span>
+                    <span>{t('footer.location')}</span>
                   </div>
                 </li>
               </ul>
@@ -127,12 +131,12 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+          <div className={`flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 ${isRTL ? 'md:flex-row-reverse' : ''}`}>
             <p className="text-white/50 text-sm">
-              © {new Date().getFullYear()} Qoot. All rights reserved.
+              {t('footer.copyright')}
             </p>
             <p className="text-white/50 text-sm">
-              Transforming Hospitality in Egypt
+              {t('footer.bottomTagline')}
             </p>
           </div>
         </div>
@@ -140,4 +144,3 @@ export default function Footer() {
     </footer>
   );
 }
-

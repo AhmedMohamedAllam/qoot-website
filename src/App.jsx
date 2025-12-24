@@ -9,10 +9,13 @@ import Roadmap from './components/Roadmap';
 import Localization from './components/Localization';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
+import { useLanguage } from './context/LanguageContext';
 
 function App() {
+  const { isRTL } = useLanguage();
+  
   return (
-    <div className="min-h-screen bg-white font-sans antialiased">
+    <div className={`min-h-screen bg-white antialiased ${isRTL ? 'font-arabic' : 'font-sans'}`} dir={isRTL ? 'rtl' : 'ltr'}>
       <Navbar />
       <main>
         <Hero />

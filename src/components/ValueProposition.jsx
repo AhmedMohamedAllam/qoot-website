@@ -1,33 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { FiTrendingUp, FiDollarSign, FiUsers } from 'react-icons/fi';
-
-const stats = [
-  {
-    icon: FiTrendingUp,
-    value: 20,
-    suffix: '%',
-    label: 'Increase in Table Turnover',
-    description: 'Faster checkout means more covers per night',
-    color: '#2ecc71',
-  },
-  {
-    icon: FiDollarSign,
-    value: 15,
-    suffix: '%',
-    label: 'Higher Average Ticket Size',
-    description: 'Smart upselling suggestions boost revenue',
-    color: '#3498db',
-  },
-  {
-    icon: FiUsers,
-    value: 30,
-    suffix: '%',
-    label: 'Reduction in Labor Costs',
-    description: 'Optimize staff efficiency with automation',
-    color: '#9b59b6',
-  },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 function CountUpAnimation({ target, suffix, inView }) {
   const [count, setCount] = useState(0);
@@ -62,6 +36,34 @@ function CountUpAnimation({ target, suffix, inView }) {
 export default function ValueProposition() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { t, isRTL } = useLanguage();
+
+  const stats = [
+    {
+      icon: FiTrendingUp,
+      value: 20,
+      suffix: '%',
+      label: t('value.turnover'),
+      description: t('value.turnoverDesc'),
+      color: '#2ecc71',
+    },
+    {
+      icon: FiDollarSign,
+      value: 15,
+      suffix: '%',
+      label: t('value.ticket'),
+      description: t('value.ticketDesc'),
+      color: '#3498db',
+    },
+    {
+      icon: FiUsers,
+      value: 30,
+      suffix: '%',
+      label: t('value.labor'),
+      description: t('value.laborDesc'),
+      color: '#9b59b6',
+    },
+  ];
 
   return (
     <section className="py-24 bg-gradient-to-br from-[#2c3e50] via-[#34495e] to-[#2c3e50] relative overflow-hidden">
@@ -81,14 +83,17 @@ export default function ValueProposition() {
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1 rounded-full bg-[#2ecc71]/20 text-[#2ecc71] text-sm font-medium mb-4">
-            Value for Owners
+            {t('value.badge')}
           </span>
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
-            ROI You Can <span className="text-[#2ecc71]">Measure</span>
+            {isRTL ? (
+              <>عائد استثمار <span className="text-[#2ecc71]">قابل للقياس</span></>
+            ) : (
+              <>ROI You Can <span className="text-[#2ecc71]">Measure</span></>
+            )}
           </h2>
           <p className="text-lg text-white/60 max-w-3xl mx-auto">
-            Qoot isn't an expense; it's an investment that pays for itself.
-            See the projected impact on your business.
+            {t('value.description')}
           </p>
         </motion.div>
 
@@ -168,11 +173,10 @@ export default function ValueProposition() {
           className="mt-16 text-center"
         >
           <p className="text-white/40 text-lg italic">
-            "Traditional systems are fragmented. Qoot unifies them."
+            {t('value.quote')}
           </p>
         </motion.div>
       </div>
     </section>
   );
 }
-

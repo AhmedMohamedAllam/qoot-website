@@ -1,40 +1,43 @@
 import { motion } from 'framer-motion';
 import { FiCamera, FiShoppingCart, FiCoffee, FiCreditCard, FiPieChart } from 'react-icons/fi';
-
-const steps = [
-  {
-    number: '01',
-    icon: FiCamera,
-    title: 'SCAN',
-    description: 'Guests scan a QR code at their table to access your digital menu instantly.',
-  },
-  {
-    number: '02',
-    icon: FiShoppingCart,
-    title: 'ORDER',
-    description: 'Orders are sent directly to the kitchen or bar with perfect accuracy.',
-  },
-  {
-    number: '03',
-    icon: FiCoffee,
-    title: 'ENJOY',
-    description: 'Guests dine without interruption while you focus on hospitality.',
-  },
-  {
-    number: '04',
-    icon: FiCreditCard,
-    title: 'PAY',
-    description: 'Bill is settled instantly via phone—no waiting, no hassle.',
-  },
-  {
-    number: '05',
-    icon: FiPieChart,
-    title: 'ANALYZE',
-    description: 'Get actionable insights on your dashboard in real-time.',
-  },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Solution() {
+  const { t, isRTL } = useLanguage();
+
+  const steps = [
+    {
+      number: isRTL ? '٠١' : '01',
+      icon: FiCamera,
+      title: t('solution.scan'),
+      description: t('solution.scanDesc'),
+    },
+    {
+      number: isRTL ? '٠٢' : '02',
+      icon: FiShoppingCart,
+      title: t('solution.order'),
+      description: t('solution.orderDesc'),
+    },
+    {
+      number: isRTL ? '٠٣' : '03',
+      icon: FiCoffee,
+      title: t('solution.enjoy'),
+      description: t('solution.enjoyDesc'),
+    },
+    {
+      number: isRTL ? '٠٤' : '04',
+      icon: FiCreditCard,
+      title: t('solution.pay'),
+      description: t('solution.payDesc'),
+    },
+    {
+      number: isRTL ? '٠٥' : '05',
+      icon: FiPieChart,
+      title: t('solution.analyze'),
+      description: t('solution.analyzeDesc'),
+    },
+  ];
+
   return (
     <section id="solution" className="py-24 bg-gradient-to-b from-[#f8f9fa] to-white relative overflow-hidden">
       {/* Background Decoration */}
@@ -52,23 +55,26 @@ export default function Solution() {
           className="text-center mb-20"
         >
           <span className="inline-block px-4 py-1 rounded-full bg-[#2ecc71]/10 text-[#2ecc71] text-sm font-medium mb-4">
-            The Solution
+            {t('solution.badge')}
           </span>
           <h2 className="text-4xl sm:text-5xl font-bold text-[#2c3e50] mb-6">
-            The <span className="text-[#2ecc71]">Qoot</span> Ecosystem
+            {isRTL ? (
+              <>نظام <span className="text-[#2ecc71]">قوت</span> المتكامل</>
+            ) : (
+              <>The <span className="text-[#2ecc71]">Qoot</span> Ecosystem</>
+            )}
           </h2>
           <p className="text-lg text-[#646464] max-w-3xl mx-auto">
-            Qoot is not just a digital menu. It's an all-in-one operating system for your 
-            dining room that digitizes the entire customer journey from the moment they sit down.
+            {t('solution.description')}
           </p>
         </motion.div>
 
         {/* Steps Timeline - Desktop */}
         <div className="hidden lg:block relative">
           {/* Connection Line */}
-          <div className="absolute top-24 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#2ecc71] to-transparent" />
+          <div className={`absolute top-24 left-0 right-0 h-0.5 bg-gradient-to-r ${isRTL ? 'from-transparent via-[#2ecc71] to-transparent' : 'from-transparent via-[#2ecc71] to-transparent'}`} />
           
-          <div className="grid grid-cols-5 gap-4">
+          <div className={`grid grid-cols-5 gap-4 ${isRTL ? 'direction-rtl' : ''}`}>
             {steps.map((step, index) => (
               <motion.div
                 key={index}
@@ -88,7 +94,7 @@ export default function Solution() {
                   >
                     <step.icon className="w-8 h-8 text-[#2ecc71]" />
                     {/* Step Number */}
-                    <div className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-[#2c3e50] text-white text-xs font-bold flex items-center justify-center">
+                    <div className={`absolute -top-2 ${isRTL ? '-left-2' : '-right-2'} w-7 h-7 rounded-full bg-[#2c3e50] text-white text-xs font-bold flex items-center justify-center`}>
                       {step.number}
                     </div>
                   </motion.div>
@@ -106,8 +112,8 @@ export default function Solution() {
 
                 {/* Arrow */}
                 {index < steps.length - 1 && (
-                  <div className="absolute top-24 -right-2 text-[#2ecc71] text-2xl hidden lg:block">
-                    →
+                  <div className={`absolute top-24 ${isRTL ? '-left-2' : '-right-2'} text-[#2ecc71] text-2xl hidden lg:block`}>
+                    {isRTL ? '←' : '→'}
                   </div>
                 )}
               </motion.div>
@@ -120,27 +126,27 @@ export default function Solution() {
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative flex items-start gap-6"
+              className={`relative flex items-start gap-6 ${isRTL ? 'flex-row-reverse' : ''}`}
             >
               {/* Timeline Line */}
               {index < steps.length - 1 && (
-                <div className="absolute left-10 top-20 w-0.5 h-full bg-[#2ecc71]/30" />
+                <div className={`absolute ${isRTL ? 'right-10' : 'left-10'} top-20 w-0.5 h-full bg-[#2ecc71]/30`} />
               )}
 
               {/* Icon Circle */}
               <div className="relative flex-shrink-0 w-20 h-20 rounded-full bg-white border-4 border-[#2ecc71] shadow-lg shadow-[#2ecc71]/20 flex items-center justify-center">
                 <step.icon className="w-8 h-8 text-[#2ecc71]" />
-                <div className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-[#2c3e50] text-white text-xs font-bold flex items-center justify-center">
+                <div className={`absolute -top-2 ${isRTL ? '-left-2' : '-right-2'} w-7 h-7 rounded-full bg-[#2c3e50] text-white text-xs font-bold flex items-center justify-center`}>
                   {step.number}
                 </div>
               </div>
 
               {/* Content */}
-              <div className="pt-2">
+              <div className={`pt-2 ${isRTL ? 'text-right' : ''}`}>
                 <h3 className="text-xl font-bold text-[#2c3e50] mb-2">
                   {step.title}
                 </h3>
@@ -161,14 +167,13 @@ export default function Solution() {
           className="mt-20 p-8 rounded-2xl bg-[#2c3e50] text-white text-center"
         >
           <p className="text-xl font-light mb-2">
-            From seated to satisfied in
+            {t('solution.fromSeated')}
           </p>
           <p className="text-4xl font-bold text-[#2ecc71]">
-            5 Simple Steps
+            {t('solution.simpleSteps')}
           </p>
         </motion.div>
       </div>
     </section>
   );
 }
-

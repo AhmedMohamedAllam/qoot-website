@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
 import { HiArrowDown, HiPlay } from 'react-icons/hi';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Hero() {
+  const { t, isRTL } = useLanguage();
+
   const scrollToSection = (href) => {
     const element = document.querySelector(href);
     if (element) {
@@ -71,10 +74,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 text-sm mb-8"
+          className={`inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 text-sm mb-8 ${isRTL ? 'flex-row-reverse' : ''}`}
         >
-          <span className="w-2 h-2 bg-[#2ecc71] rounded-full mr-2 animate-pulse" />
-          Launching in New Cairo & Madinaty
+          <span className={`w-2 h-2 bg-[#2ecc71] rounded-full ${isRTL ? 'ml-2' : 'mr-2'} animate-pulse`} />
+          {t('hero.badge')}
         </motion.div>
 
         {/* Main Headline */}
@@ -84,7 +87,7 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white mb-6 tracking-tight"
         >
-          <span className="block">QOOT</span>
+          <span className="block">{isRTL ? 'قوت' : 'QOOT'}</span>
         </motion.h1>
 
         {/* Tagline */}
@@ -94,8 +97,17 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.4 }}
           className="text-xl sm:text-2xl md:text-3xl text-white/80 font-light mb-4"
         >
-          Smart Menus. Smart Payments.{' '}
-          <span className="text-[#2ecc71] font-semibold">Smarter Dining.</span>
+          {isRTL ? (
+            <>
+              قوائم ذكية. مدفوعات ذكية.{' '}
+              <span className="text-[#2ecc71] font-semibold">تجربة طعام أذكى.</span>
+            </>
+          ) : (
+            <>
+              Smart Menus. Smart Payments.{' '}
+              <span className="text-[#2ecc71] font-semibold">Smarter Dining.</span>
+            </>
+          )}
         </motion.p>
 
         {/* Sub-tagline */}
@@ -105,8 +117,7 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.6 }}
           className="text-base sm:text-lg text-white/60 max-w-2xl mx-auto mb-12"
         >
-          The complete digital dining ecosystem for Egyptian restaurants. 
-          Transform your customer experience from order to payment.
+          {t('hero.description')}
         </motion.p>
 
         {/* CTA Buttons */}
@@ -114,7 +125,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className={`flex flex-col sm:flex-row items-center justify-center gap-4 ${isRTL ? 'sm:flex-row-reverse' : ''}`}
         >
           <motion.button
             onClick={() => scrollToSection('#contact')}
@@ -122,18 +133,20 @@ export default function Hero() {
             whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(46, 204, 113, 0.4)' }}
             whileTap={{ scale: 0.95 }}
           >
-            Request a Demo
-            <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
+            {t('hero.requestDemo')}
+            <span className={`inline-block ${isRTL ? 'mr-2 group-hover:-translate-x-1' : 'ml-2 group-hover:translate-x-1'} transition-transform`}>
+              {isRTL ? '←' : '→'}
+            </span>
           </motion.button>
           
           <motion.button
             onClick={() => scrollToSection('#solution')}
-            className="group px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold text-lg border border-white/20 hover:bg-white/20 transition-all flex items-center"
+            className={`group px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-semibold text-lg border border-white/20 hover:bg-white/20 transition-all flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <HiPlay className="mr-2 text-[#2ecc71]" />
-            See How It Works
+            <HiPlay className={`${isRTL ? 'ml-2' : 'mr-2'} text-[#2ecc71]`} />
+            {t('hero.seeHow')}
           </motion.button>
         </motion.div>
 
@@ -145,9 +158,9 @@ export default function Hero() {
           className="mt-16 grid grid-cols-3 gap-8 max-w-2xl mx-auto"
         >
           {[
-            { value: '20%', label: 'Faster Turnover' },
-            { value: '15%', label: 'Higher Revenue' },
-            { value: '30%', label: 'Cost Savings' },
+            { value: '20%', label: t('hero.fasterTurnover') },
+            { value: '15%', label: t('hero.higherRevenue') },
+            { value: '30%', label: t('hero.costSavings') },
           ].map((stat, index) => (
             <div key={index} className="text-center">
               <div className="text-2xl sm:text-3xl font-bold text-[#2ecc71]">{stat.value}</div>
@@ -170,11 +183,10 @@ export default function Hero() {
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <span className="text-xs mb-2">Scroll to explore</span>
+          <span className="text-xs mb-2">{t('hero.scrollToExplore')}</span>
           <HiArrowDown className="text-xl" />
         </motion.button>
       </motion.div>
     </section>
   );
 }
-
