@@ -98,9 +98,28 @@ export default function SplitBill() {
             )}
           </h2>
           
-          <p className="text-xl text-white/80 max-w-3xl mx-auto">
+          <p className="text-xl text-white/80 max-w-3xl mx-auto mb-6">
             {t('splitBill.description')}
           </p>
+          
+          {/* Friends Icons */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="flex items-center justify-center gap-3"
+          >
+            <div className="flex -space-x-4">
+              <div className="w-12 h-12 rounded-full bg-blue-400 border-4 border-white/20 flex items-center justify-center text-2xl shadow-lg">👨</div>
+              <div className="w-12 h-12 rounded-full bg-pink-400 border-4 border-white/20 flex items-center justify-center text-2xl shadow-lg">👩</div>
+              <div className="w-12 h-12 rounded-full bg-green-400 border-4 border-white/20 flex items-center justify-center text-2xl shadow-lg">👨</div>
+              <div className="w-12 h-12 rounded-full bg-yellow-400 border-4 border-white/20 flex items-center justify-center text-2xl shadow-lg">👩</div>
+            </div>
+            <span className="text-white/60 text-sm font-medium px-4 py-2 bg-white/10 rounded-full">
+              {isRTL ? '٤ أصحاب • طاولة واحدة • صفر مشاكل' : '4 Friends • 1 Table • Zero Drama'}
+            </span>
+          </motion.div>
         </motion.div>
 
         {/* Main Content Grid */}

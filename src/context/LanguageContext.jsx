@@ -266,8 +266,8 @@ const translations = {
     splitBill: {
       badge: '✨ NEW FEATURE',
       titleHighlight: 'Smart Split Bill',
-      titleRest: 'Pay Only For What You Ate',
-      description: 'No more awkward bill calculations with friends! Each person scans the QR code, selects their items from the receipt, and pays their share instantly using NFC or QR code payment.',
+      titleRest: 'Dining With Friends? Pay Only For What You Ate!',
+      description: 'Out with your squad? No more awkward "who had what" calculations! Each friend scans the table QR code, selects their items from the receipt, and pays their share instantly via NFC or QR. Fair, fast, and no more arguments!',
       howItWorks: 'How It Works',
       step1Title: 'Scan & View Receipt',
       step1Desc: 'Each friend scans the table QR code and sees the full itemized receipt.',
@@ -503,8 +503,8 @@ const translations = {
     splitBill: {
       badge: '✨ ميزة جديدة',
       titleHighlight: 'تقسيم الفاتورة الذكي',
-      titleRest: 'ادفع فقط ما أكلته',
-      description: 'لا مزيد من الحسابات المحرجة مع الأصدقاء! كل شخص يمسح رمز QR، يختار أصنافه من الإيصال، ويدفع حصته فوراً عبر NFC أو QR.',
+      titleRest: 'مع أصحابك؟ ادفع فقط ما أكلته!',
+      description: 'طالع مع شلتك؟ لا مزيد من حسابات "مين أكل إيه"! كل صاحب يمسح رمز QR على الطاولة، يختار أصنافه من الإيصال، ويدفع حصته فوراً عبر NFC أو QR. عادل، سريع، وبدون جدال!',
       howItWorks: 'كيف يعمل',
       step1Title: 'امسح وشاهد الإيصال',
       step1Desc: 'كل صديق يمسح رمز QR على الطاولة ويرى الإيصال كاملاً بالتفصيل.',
