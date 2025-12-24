@@ -40,11 +40,12 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 z-50 w-full transition-all duration-300 ${
           isScrolled
             ? 'bg-white/90 backdrop-blur-lg shadow-lg'
             : 'bg-transparent'
         }`}
+        style={{ left: 0, right: 0 }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className={`flex items-center justify-between h-16 md:h-20 ${isRTL ? 'flex-row-reverse' : ''}`}>

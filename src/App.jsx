@@ -4,8 +4,13 @@ import Problem from './components/Problem';
 import Solution from './components/Solution';
 import Features from './components/Features';
 import SplitBill from './components/SplitBill';
+import KitchenDisplay from './components/KitchenDisplay';
+import Dashboard from './components/Dashboard';
 import ValueProposition from './components/ValueProposition';
+import InteractiveDemo from './components/InteractiveDemo';
+import Testimonials from './components/Testimonials';
 import Pricing from './components/Pricing';
+import AdvancedFeatures from './components/AdvancedFeatures';
 import Roadmap from './components/Roadmap';
 import Localization from './components/Localization';
 import ContactForm from './components/ContactForm';
@@ -24,8 +29,13 @@ function App() {
         <Solution />
         <Features />
         <SplitBill />
+        <KitchenDisplay />
+        <Dashboard />
         <ValueProposition />
+        <InteractiveDemo />
+        <Testimonials />
         <Pricing />
+        <AdvancedFeatures />
         <Roadmap />
         <Localization />
         <ContactForm />
