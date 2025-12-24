@@ -122,7 +122,7 @@ export default function Solution() {
         </div>
 
         {/* Steps Timeline - Mobile/Tablet */}
-        <div className="lg:hidden space-y-6">
+        <div className="lg:hidden space-y-6" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
           {steps.map((step, index) => (
             <motion.div
               key={index}
@@ -130,17 +130,29 @@ export default function Solution() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative flex items-start gap-6 ${isRTL ? 'flex-row-reverse text-right' : 'text-left'}`}
+              className="relative flex items-start gap-6"
             >
               {/* Timeline Line */}
               {index < steps.length - 1 && (
-                <div className={`absolute ${isRTL ? 'right-10' : 'left-10'} top-20 w-0.5 h-full bg-[#2ecc71]/30`} />
+                <div 
+                  className="absolute top-20 w-0.5 h-full bg-[#2ecc71]/30"
+                  style={{ 
+                    left: isRTL ? 'auto' : '2.5rem',
+                    right: isRTL ? '2.5rem' : 'auto'
+                  }}
+                />
               )}
 
               {/* Icon Circle */}
               <div className="relative flex-shrink-0 w-20 h-20 rounded-full bg-white border-4 border-[#2ecc71] shadow-lg shadow-[#2ecc71]/20 flex items-center justify-center">
                 <step.icon className="w-8 h-8 text-[#2ecc71]" />
-                <div className={`absolute -top-2 ${isRTL ? '-right-2' : '-left-2'} w-7 h-7 rounded-full bg-[#2c3e50] text-white text-xs font-bold flex items-center justify-center`}>
+                <div 
+                  className="absolute -top-2 w-7 h-7 rounded-full bg-[#2c3e50] text-white text-xs font-bold flex items-center justify-center"
+                  style={{
+                    left: isRTL ? '-0.5rem' : 'auto',
+                    right: isRTL ? 'auto' : '-0.5rem'
+                  }}
+                >
                   {step.number}
                 </div>
               </div>

@@ -26,6 +26,20 @@
   text-align: center;
 }
 
+/* Explicit flex direction classes that work in RTL */
+.flex-row-reverse {
+  flex-direction: row-reverse !important;
+}
+
+.flex-row {
+  flex-direction: row !important;
+}
+
+/* RTL specific direction */
+.dir-rtl {
+  direction: rtl;
+}
+
 [dir="rtl"] .text-left {
   text-align: right;
 }
