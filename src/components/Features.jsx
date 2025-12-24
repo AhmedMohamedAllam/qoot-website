@@ -6,9 +6,10 @@ import {
   FiCreditCard, 
   FiBox, 
   FiTrendingUp, 
-  FiGlobe 
+  FiGlobe,
+  FiUsers
 } from 'react-icons/fi';
-import { HiX } from 'react-icons/hi';
+import { HiX, HiOutlineQrcode } from 'react-icons/hi';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function Features() {
@@ -58,17 +59,43 @@ export default function Features() {
       subtitle: t('features.paymentsTag'),
       description: t('features.paymentsDesc'),
       details: isRTL ? [
-        'تقسيم الفاتورة: حسب الصنف أو بالنسبة المئوية',
-        'تكامل محلي: البطاقات، Apple Pay، المحافظ المحلية',
-        'بقشيش أعلى: خيارات محددة مسبقاً تشجع مكافأة الموظفين',
+        'الدفع عبر NFC: انقر هاتفك للدفع فوراً',
+        'الدفع عبر QR: امسح وادفع بثوانٍ',
+        'تقسيم الفاتورة الذكي: كل شخص يدفع فقط ما أكله',
+        'تكامل محلي: Apple Pay، Google Pay، إنستاباي، فوري',
         'تسوية فورية: لا انتظار للنادل',
       ] : [
-        'Split the Bill: By item or by percentage',
-        'Local Integration: Credit Cards, Apple Pay, local wallets',
-        'Higher Tips: Preset tip options encourage rewarding staff',
+        'NFC Payment: Tap your phone to pay instantly',
+        'QR Code Payment: Scan and pay in seconds',
+        'Smart Split Bill: Each person pays only for what they ate',
+        'Local Integration: Apple Pay, Google Pay, InstaPay, Fawry',
         'Instant Settlement: No waiting for the server',
       ],
       color: '#9b59b6',
+      isHighlighted: true,
+    },
+    {
+      icon: FiUsers,
+      title: isRTL ? 'تقسيم الفاتورة الذكي' : 'Smart Split Bill',
+      subtitle: isRTL ? 'لا مزيد من الجدال!' : 'No More Arguments!',
+      description: isRTL 
+        ? 'كل صديق يمسح، يختار أصنافه من الإيصال، ويدفع حصته فقط. سحر!' 
+        : 'Each friend scans, selects their items from the receipt, and pays their share only. Magic!',
+      details: isRTL ? [
+        'كل شخص يمسح رمز QR على الطاولة',
+        'يرى الإيصال كاملاً بالتفصيل',
+        'ينقر لتحديد أصنافه فقط',
+        'يدفع حصته عبر NFC أو QR أو المحفظة',
+        'لا حسابات، لا جدال، لا إحراج!',
+      ] : [
+        'Each person scans the table QR code',
+        'Views the full itemized receipt',
+        'Taps to select only their items',
+        'Pays their share via NFC, QR, or wallet',
+        'No calculations, no arguments, no awkwardness!',
+      ],
+      color: '#e91e63',
+      isNew: true,
     },
     {
       icon: FiBox,
@@ -176,6 +203,12 @@ export default function Features() {
               {feature.isPremium && (
                 <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} px-3 py-1 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold`}>
                   {t('features.premium')}
+                </div>
+              )}
+              {/* New Feature Badge */}
+              {feature.isNew && (
+                <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold animate-pulse`}>
+                  {isRTL ? 'جديد ✨' : 'NEW ✨'}
                 </div>
               )}
 

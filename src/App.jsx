@@ -3,6 +3,7 @@ import Hero from './components/Hero';
 import Problem from './components/Problem';
 import Solution from './components/Solution';
 import Features from './components/Features';
+import SplitBill from './components/SplitBill';
 import ValueProposition from './components/ValueProposition';
 import Pricing from './components/Pricing';
 import Roadmap from './components/Roadmap';
@@ -22,6 +23,7 @@ function App() {
         <Problem />
         <Solution />
         <Features />
+        <SplitBill />
         <ValueProposition />
         <Pricing />
         <Roadmap />
