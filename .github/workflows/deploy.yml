@@ -78,17 +78,18 @@ jobs:
       - name: Setup SPA routing (404.html)
         run: |
           # Copy index.html to 404.html for each app to support client-side routing
+          # GitHub Pages will serve 404.html for any route, allowing React Router to handle routing
           if [ -f dist/index.html ]; then
             cp dist/index.html dist/404.html
-            echo "Created dist/404.html for marketing app"
+            echo "✓ Created dist/404.html for marketing app"
           fi
           if [ -f dist/customer/index.html ]; then
             cp dist/customer/index.html dist/customer/404.html
-            echo "Created dist/customer/404.html for customer app"
+            echo "✓ Created dist/customer/404.html for customer app"
           fi
           if [ -f dist/dashboard/index.html ]; then
             cp dist/dashboard/index.html dist/dashboard/404.html
-            echo "Created dist/dashboard/404.html for dashboard app"
+            echo "✓ Created dist/dashboard/404.html for dashboard app"
           fi
 
       - name: Verify build structure

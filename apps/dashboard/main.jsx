@@ -7,9 +7,12 @@ import { AuthProvider } from '../../shared/contexts/AuthContext';
 import { RestaurantProvider } from '../../shared/contexts/RestaurantContext';
 import './index.css';
 
+// Set basename for GitHub Pages deployment, empty for local development
+const basename = import.meta.env.PROD ? '/qoot-website/dashboard' : '';
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <LanguageProvider>
         <AuthProvider>
           <RestaurantProvider>
