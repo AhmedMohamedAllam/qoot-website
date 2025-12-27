@@ -19,6 +19,18 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
 
+    // Demo mode - skip Firebase authentication
+    const DEMO_MODE = true;
+    
+    if (DEMO_MODE) {
+      // Simulate login delay
+      await new Promise(resolve => setTimeout(resolve, 800));
+      toast.success(isRTL ? 'مرحباً بك (وضع تجريبي)' : 'Welcome! (Demo Mode)');
+      navigate('/orders');
+      setLoading(false);
+      return;
+    }
+
     try {
       const result = await loginWithEmail(email, password);
       
@@ -26,14 +38,10 @@ export default function LoginPage() {
         toast.success(isRTL ? 'تم تسجيل الدخول بنجاح!' : 'Login successful!');
         navigate('/orders');
       } else {
-        // For demo, allow any login
-        toast.success(isRTL ? 'مرحباً بك (وضع تجريبي)' : 'Welcome! (Demo Mode)');
-        navigate('/orders');
+        toast.error(result.error || 'Login failed');
       }
     } catch (error) {
-      // For demo, proceed anyway
-      toast.success(isRTL ? 'مرحباً بك (وضع تجريبي)' : 'Welcome! (Demo Mode)');
-      navigate('/orders');
+      toast.error(error.message || 'An error occurred');
     } finally {
       setLoading(false);
     }

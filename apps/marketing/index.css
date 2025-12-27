@@ -1,7 +1,7 @@
-@import "tailwindcss";
-
-/* Google Fonts */
+/* Google Fonts - must be first */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700;800&display=swap');
+
+@import "tailwindcss";
 
 /* Font Configuration */
 @theme {

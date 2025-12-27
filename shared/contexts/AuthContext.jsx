@@ -1,6 +1,26 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { onAuthChange, getCurrentUserData, logout as firebaseLogout, ROLES } from '../firebase/auth';
 
+// Demo mode flag - set to true for development without Firebase
+const DEMO_MODE = true;
+
+// Demo user data for testing
+const DEMO_USER = {
+  uid: 'demo-user-123',
+  email: 'admin@qoot.app',
+  displayName: 'Demo Admin'
+};
+
+const DEMO_USER_DATA = {
+  id: 'demo-user-123',
+  email: 'admin@qoot.app',
+  name: 'Ahmed Mohamed',
+  role: 'owner',
+  restaurantId: 'demo-restaurant',
+  restaurantName: 'Cairo Grill House',
+  active: true
+};
+
 const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -12,11 +32,17 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(DEMO_MODE ? DEMO_USER : null);
+  const [userData, setUserData] = useState(DEMO_MODE ? DEMO_USER_DATA : null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // In demo mode, skip Firebase auth
+    if (DEMO_MODE) {
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthChange(async (firebaseUser) => {
       if (firebaseUser) {
         setUser(firebaseUser);
@@ -35,6 +61,11 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const logout = async () => {
+    if (DEMO_MODE) {
+      // In demo mode, just reset state (but don't actually log out to keep demo working)
+      return { success: true };
+    }
+    
     const result = await firebaseLogout();
     if (result.success) {
       setUser(null);

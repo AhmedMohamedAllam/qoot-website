@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebase/config';
+import { db } from '../../../shared/firebase/config';
 import { FiSend, FiCheck, FiAlertCircle, FiLoader } from 'react-icons/fi';
 import emailjs from '@emailjs/browser';
 import { useLanguage } from '../../../shared/contexts/LanguageContext';
