@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   root: __dirname,
   publicDir: '../../public',
+  base: '/qoot-website/',
   resolve: {
     alias: {
       '@shared': path.resolve(__dirname, '../../shared'),
@@ -17,8 +18,8 @@ export default defineConfig({
     port: 5173,
   },
   build: {
-    outDir: '../../dist/marketing',
-    emptyOutDir: true,
+    outDir: '../../dist',
+    emptyOutDir: true, // Marketing builds first, so it can empty
   },
 });
 

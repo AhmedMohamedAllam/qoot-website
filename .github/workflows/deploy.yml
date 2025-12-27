@@ -1,5 +1,10 @@
 name: Deploy to GitHub Pages
 
+# This workflow builds and deploys all three QOOT apps to GitHub Pages:
+# - Marketing: https://ahmedmohamedallam.github.io/qoot-website/ (root)
+# - Customer: https://ahmedmohamedallam.github.io/qoot-website/customer/
+# - Dashboard: https://ahmedmohamedallam.github.io/qoot-website/dashboard/
+
 on:
   push:
     branches:
@@ -34,8 +39,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: Clean dist directory
+        run: rm -rf dist && mkdir -p dist
+
+      - name: Build Marketing (root)
+        run: npm run build:marketing
         env:
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
@@ -46,6 +54,53 @@ jobs:
           VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
           VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
           VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+
+      - name: Build Customer App
+        run: npm run build:customer
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+
+      - name: Build Dashboard App
+        run: npm run build:dashboard
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+
+      - name: Setup SPA routing (404.html)
+        run: |
+          # Copy index.html to 404.html for each app to support client-side routing
+          if [ -f dist/index.html ]; then
+            cp dist/index.html dist/404.html
+            echo "Created dist/404.html for marketing app"
+          fi
+          if [ -f dist/customer/index.html ]; then
+            cp dist/customer/index.html dist/customer/404.html
+            echo "Created dist/customer/404.html for customer app"
+          fi
+          if [ -f dist/dashboard/index.html ]; then
+            cp dist/dashboard/index.html dist/dashboard/404.html
+            echo "Created dist/dashboard/404.html for dashboard app"
+          fi
+
+      - name: Verify build structure
+        run: |
+          echo "Build structure:"
+          ls -la dist/
+          echo "Marketing files:"
+          ls -la dist/ | head -10
+          echo "Customer files:"
+          ls -la dist/customer/ | head -10 || echo "Customer directory not found"
+          echo "Dashboard files:"
+          ls -la dist/dashboard/ | head -10 || echo "Dashboard directory not found"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

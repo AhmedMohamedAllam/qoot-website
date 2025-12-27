@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   root: __dirname,
   publicDir: '../../public',
+  base: '/qoot-website/dashboard/',
   resolve: {
     alias: {
       '@shared': path.resolve(__dirname, '../../shared'),
@@ -18,7 +19,7 @@ export default defineConfig({
   },
   build: {
     outDir: '../../dist/dashboard',
-    emptyOutDir: true,
+    emptyOutDir: false, // Don't empty, we have multiple apps
   },
 });
 
