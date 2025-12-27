@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiCamera, FiSmartphone, FiZap, FiClock, FiWifi } from 'react-icons/fi';
 import { useLanguage } from '../../../shared/contexts/LanguageContext';
@@ -334,6 +335,7 @@ function FloatingInstruction({ isRTL }) {
 }
 
 export default function LandingPage() {
+  const navigate = useNavigate();
   const { isRTL, toggleLanguage } = useLanguage();
   const [activeOption, setActiveOption] = useState('qr');
 
@@ -487,7 +489,7 @@ export default function LandingPage() {
         {/* Demo Button */}
         <motion.div variants={itemVariants}>
           <motion.button
-            onClick={() => window.location.href = '/menu/demo-restaurant/1'}
+            onClick={() => navigate('/menu/demo-restaurant/1')}
             className="relative px-8 py-4 rounded-2xl font-bold text-lg overflow-hidden group"
             style={{
               background: 'transparent',

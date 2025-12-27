@@ -30,8 +30,9 @@ export default function SplitPaymentPage() {
   const total = cartTotal || 450;
   const splitAmount = total / splitCount;
   
-  // Generate share link
-  const shareLink = `${window.location.origin}/join-bill/${restaurantId || 'demo'}/${tableNumber || '1'}?split=${splitCount}`;
+  // Generate share link with proper basename for GitHub Pages
+  const basename = import.meta.env.PROD ? '/qoot-website/customer' : '';
+  const shareLink = `${window.location.origin}${basename}/join-bill/${restaurantId || 'demo'}/${tableNumber || '1'}?split=${splitCount}`;
   
   useEffect(() => {
     setMyShare(splitAmount);
