@@ -75,6 +75,22 @@ jobs:
           VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
 
+      - name: Verify all builds completed
+        run: |
+          if [ ! -f dist/index.html ]; then
+            echo "ERROR: Marketing build failed - index.html not found"
+            exit 1
+          fi
+          if [ ! -f dist/customer/index.html ]; then
+            echo "ERROR: Customer build failed - index.html not found"
+            exit 1
+          fi
+          if [ ! -f dist/dashboard/index.html ]; then
+            echo "ERROR: Dashboard build failed - index.html not found"
+            exit 1
+          fi
+          echo "✓ All builds completed successfully"
+
       - name: Setup SPA routing (404.html)
         run: |
           # Copy index.html to 404.html for each app to support client-side routing
@@ -91,17 +107,38 @@ jobs:
             cp dist/dashboard/index.html dist/dashboard/404.html
             echo "✓ Created dist/dashboard/404.html for dashboard app"
           fi
+          
+      - name: Verify assets exist
+        run: |
+          echo "Checking for asset directories..."
+          ls -la dist/assets/ 2>/dev/null && echo "✓ Marketing assets found" || echo "⚠ Marketing assets directory not found"
+          ls -la dist/customer/assets/ 2>/dev/null && echo "✓ Customer assets found" || echo "⚠ Customer assets directory not found"
+          ls -la dist/dashboard/assets/ 2>/dev/null && echo "✓ Dashboard assets found" || echo "⚠ Dashboard assets directory not found"
 
       - name: Verify build structure
         run: |
-          echo "Build structure:"
+          echo "=== Build structure ==="
           ls -la dist/
-          echo "Marketing files:"
-          ls -la dist/ | head -10
-          echo "Customer files:"
-          ls -la dist/customer/ | head -10 || echo "Customer directory not found"
-          echo "Dashboard files:"
-          ls -la dist/dashboard/ | head -10 || echo "Dashboard directory not found"
+          echo ""
+          echo "=== Marketing files ==="
+          ls -la dist/ | head -15
+          echo ""
+          echo "=== Marketing index.html script paths ==="
+          grep -o 'src="[^"]*"' dist/index.html || echo "No scripts found in marketing index.html"
+          echo ""
+          echo "=== Customer files ==="
+          ls -la dist/customer/ | head -15 || echo "Customer directory not found"
+          if [ -f dist/customer/index.html ]; then
+            echo "=== Customer index.html script paths ==="
+            grep -o 'src="[^"]*"' dist/customer/index.html || echo "No scripts found in customer index.html"
+          fi
+          echo ""
+          echo "=== Dashboard files ==="
+          ls -la dist/dashboard/ | head -15 || echo "Dashboard directory not found"
+          if [ -f dist/dashboard/index.html ]; then
+            echo "=== Dashboard index.html script paths ==="
+            grep -o 'src="[^"]*"' dist/dashboard/index.html || echo "No scripts found in dashboard index.html"
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

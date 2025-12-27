@@ -13,12 +13,29 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || "YOUR_APP_ID"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase with error handling
+let app;
+try {
+  app = initializeApp(firebaseConfig);
+} catch (error) {
+  console.error('Firebase initialization error:', error);
+  // Create a mock app object to prevent crashes
+  app = { name: '[DEFAULT]', options: firebaseConfig };
+}
 
-// Initialize services
-export const db = getFirestore(app);
-export const auth = getAuth(app);
-export const storage = getStorage(app);
+// Initialize services with error handling
+let db, auth, storage;
+try {
+  db = getFirestore(app);
+  auth = getAuth(app);
+  storage = getStorage(app);
+} catch (error) {
+  console.error('Firebase services initialization error:', error);
+  // Create mock objects to prevent crashes
+  db = null;
+  auth = null;
+  storage = null;
+}
 
+export { db, auth, storage };
 export default app;
