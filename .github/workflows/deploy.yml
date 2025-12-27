@@ -91,6 +91,22 @@ jobs:
           fi
           echo "✓ All builds completed successfully"
 
+      - name: Inject build timestamp for cache busting
+        run: |
+          BUILD_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          BUILD_SHA=${GITHUB_SHA:0:7}
+          
+          # Inject build info into HTML files
+          for html_file in dist/index.html dist/customer/index.html dist/dashboard/index.html; do
+            if [ -f "$html_file" ]; then
+              # Add build timestamp as comment and meta tag
+              sed -i.bak "s|<head>|<head>\n    <!-- Build: $BUILD_SHA at $BUILD_TIME -->|g" "$html_file" 2>/dev/null || \
+              sed -i '' "s|<head>|<head>\n    <!-- Build: $BUILD_SHA at $BUILD_TIME -->|g" "$html_file"
+              rm -f "${html_file}.bak" 2>/dev/null || true
+            fi
+          done
+          echo "✓ Injected build timestamp: $BUILD_SHA at $BUILD_TIME"
+
       - name: Setup SPA routing (404.html)
         run: |
           # Copy index.html to 404.html for each app to support client-side routing
